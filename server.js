@@ -1,22 +1,12 @@
 const http = require("http");
 const fs = require("fs");
+const path = require('path')
 const { WebSocketServer, WebSocket } = require("ws");
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { "Content-Type": "text/html" });
-  fs.createReadStream(__dirname + "/index.html").pipe(res);
-});
+const server = http.createServer((req, res)=>{
+  let filePath = __dirname + (req.url == '/'?'index.html':req.url);
+  let extname = path.extname(filePath)
+  let contentType = "text/html";
 
-const wss = new WebSocketServer({ server });
-
-wss.on("connection", (socket) => {
-  socket.on("message", (data) => {
-    for (const client of wss.clients) {
-      if (client !== socket && client.readyState === WebSocket.OPEN) {
-        client.send(data.toString());
-      }
-    }
-  });
-});
-
-server.listen(3000);
+  if 
+})
